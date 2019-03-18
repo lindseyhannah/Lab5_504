@@ -8,3 +8,12 @@ var OpenStreetMap_DE = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmd
 		zoom: 11
 	});
     map.addLayer(OpenStreetMap_DE);
+
+    var control = L.Routing.control({
+        waypoints: [
+            L.latLng(47.246587, -122.438830),
+            L.latLng(47.318017, -122.542970)
+        ],
+        routeWhileDragging: true
+        units: 'imperial',
+    }).addTo(map);
