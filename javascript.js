@@ -1,3 +1,5 @@
+//This increases the discoverability of the map by letting the user know that they can add start and end points by clicking the map
+//Changing the cursor to a crosshair, as done using a CSS class, also helps the user understand they can pinpoint a location better than the standard grab hand cursor
 window.onload = function(){
 alert("Click anywhere on the map to set a start and end point for routing");
 }
