@@ -22,6 +22,7 @@ alert("Click anywhere on the map to set a start and end point for routing");
         ],
         geocoder: L.Control.Geocoder.nominatim(),
         routeWhileDragging: true,
+        reverseWaypoints: true,
         router: L.Routing.mapbox('pk.eyJ1IjoibG1oYW5uYWgiLCJhIjoiY2p0ZXEwbXlhMWtzcTN5b2I3MDVyNG00MCJ9.Sajhgv5OHLfXBiyZdRb9IA'),
         units: 'imperial',
     }).addTo(map);
