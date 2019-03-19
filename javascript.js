@@ -44,6 +44,7 @@ function pointhome(e){
 
 };
 //function that when map.locate is intiiated, places a circle icon and popup at user location
+//Marker object is hidden with pop up so I used a circle
 map.on('locationfound', function(e){
 	L.circle(e.latlng).addTo(map);
 	var geoloc= L.popup()
