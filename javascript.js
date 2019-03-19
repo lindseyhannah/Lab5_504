@@ -1,3 +1,6 @@
+window.onload = function(){
+alert("Click anywhere on the map to set a start and end point for routing");
+}
 var OpenStreetMap_DE = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -9,11 +12,62 @@ var OpenStreetMap_DE = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmd
 	});
     map.addLayer(OpenStreetMap_DE);
 
-    var control = L.Routing.control({
+    var control= L.Routing.control({
         waypoints: [
-            L.latLng(47.246587, -122.438830),
-            L.latLng(47.318017, -122.542970)
+        	null
+            //L.latLng(47.246587, -122.438830),
+            //L.latLng(47.258024,  -122.444725),
+            //L.latLng(47.318017, -122.542970)
         ],
-        routeWhileDragging: true
+        geocoder: L.Control.Geocoder.nominatim(),
+        routeWhileDragging: true,
+        router: L.Routing.mapbox('pk.eyJ1IjoibG1oYW5uYWgiLCJhIjoiY2p0ZXEwbXlhMWtzcTN5b2I3MDVyNG00MCJ9.Sajhgv5OHLfXBiyZdRb9IA'),
         units: 'imperial',
     }).addTo(map);
+
+function createButton(label, container) {
+    var btn = L.DomUtil.create('button', '', container);
+    btn.setAttribute('type', 'button');
+    btn.innerHTML = label;
+    return btn;
+}
+
+
+function pointhome(e){
+		    
+		var home= map.locate({
+		    setView: true, 
+		    maxZoom: 16, 
+		    timeout: 15000, 
+		    watch: false,
+		    });
+		
+		L.DomEvent.on('click', function() {
+		             L.marker(e.latlng).addTo(map)
+		             	.bindPopup("You are here")
+		             map.closePopup();
+		});
+
+};
+
+map.on('click', function(e) {
+
+    var container = L.DomUtil.create('div'),
+
+        startBtn = createButton('Start from this location', container),
+        destBtn = createButton('Go to this location', container);
+		L.DomEvent.on(startBtn, 'click', function() {
+		             control.spliceWaypoints(0, 1, e.latlng);
+		             map.closePopup();
+		         });
+		L.DomEvent.on(destBtn, 'click', function() {
+		             control.spliceWaypoints(-1, 1, e.latlng);
+		             map.closePopup();
+		         });
+ 	    L.popup()
+        	.setContent(container)
+       		.setLatLng(e.latlng)
+        	.openOn(map);
+});
+
+
